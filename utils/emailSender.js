@@ -51,7 +51,7 @@ async function sendEmail(summary) {
 
         <br/>
         <p>📊 Report tersedia di GitHub Pages:</p>
-        <a href="${process.env.GITHUB_PAGES_URL}">
+        <a href="${process.env.GH_PAGES_URL}">
           Lihat Report
         </a>
       `,
