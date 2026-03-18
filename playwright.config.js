@@ -39,7 +39,7 @@ module.exports = defineConfig({
   projects: [
     {
       name: 'Chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: { browserName: 'chromium'  },
     }
     // {
     //   name: 'Firefox',

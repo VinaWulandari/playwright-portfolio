@@ -1,45 +1,35 @@
+require('dotenv').config();
+
 const nodemailer = require('nodemailer');
 
 async function sendEmail(summary) {
+
   let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'testing.vinaw@gmail.com',
-      pass: 'sefziiwmckcjbnpd'
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS
     }
   });
 
-  let info = await transporter.sendMail({
-    from: '"Automation Report" <testing.vinaw@gmail.com>',
-    to: 'testing.vinaw@gmail.com',
-    subject: 'Hasil Automation Testing',
+  await transporter.sendMail({
+    from: `"QA Automation" <${process.env.EMAIL_USER}>`,
+    to: process.env.EMAIL_USER,
+    subject: 'Automation Test Result',
+
     html: `
-      <h2>Automation Test Result</h2>
+      <h2>🚀 Test Result</h2>
+      <p>Total: ${summary.total}</p>
+      <p>Passed: ${summary.passed}</p>
+      <p>Failed: ${summary.failed}</p>
 
-      <p><b>Total:</b> ${summary.total}</p>
-      <p style="color:green;"><b>Passed:</b> ${summary.passed}</p>
-      <p style="color:red;"><b>Failed:</b> ${summary.failed}</p>
+      <a href="https://VinaWulandari.github.io/playwright-portfolio/">
+        View Report
+      </a>
+    `
+  });
 
-      <hr/>
-
-      <p>Report dapat dibuka di lokal:</p>
-      <code>npx allure open allure-report</code>
-
-      <p>Waktu: ${new Date().toLocaleString()}</p>
-
-      Terima kasih.
-        `,
-
-        attachments: [
-        // 👉 OPSI 1: HTML file (simple)
-        {
-          filename: 'report.html',
-          path: './allure-report/index.html'
-        }
-      ]
-    });
-
-  console.log('Email terkirim:', info.messageId);
+  console.log("✅ Email sent");
 }
 
 module.exports = { sendEmail };
