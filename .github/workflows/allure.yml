@@ -1,4 +1,4 @@
-name: Playwright + Allure Report
+name: Playwright Automation + Allure Report
 
 on:
   push:
@@ -12,7 +12,7 @@ jobs:
       - name: 📥 Checkout code
         uses: actions/checkout@v4
 
-      - name: 🟢 Setup Node
+      - name: 🟢 Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -20,11 +20,14 @@ jobs:
       - name: 📦 Install dependencies
         run: npm install
 
-      - name: 🎭 Install Playwright
+      - name: 🎭 Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: 🧪 Run test
+      - name: 🧪 Run Playwright tests
         run: npx playwright test
+
+      - name: 📊 Install Allure CLI
+        run: npm install -g allure-commandline --save-dev
 
       - name: 📊 Generate Allure Report
         run: npx allure generate allure-results --clean -o allure-report
